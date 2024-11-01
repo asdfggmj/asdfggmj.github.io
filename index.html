@@ -7,21 +7,25 @@
     <title>个人主页</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </head>
 
 <body>
+    <!-- 容器 -->
     <div class="container-fluer">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- 导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light pl-5 fixed-top">
+            <!-- logo部分 -->
             <a class="navbar-brand" href="#">LOGO</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+            <!-- 链接 -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">主页 <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">选中链接 <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">链接1</a>
@@ -29,31 +33,57 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                             aria-expanded="false">
-                            下拉按钮
+                            关于
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">下拉1</a>
-                            <a class="dropdown-item" href="#">下拉2</a>
+                            <a class="dropdown-item" href="#">常见问题</a>
+                            <a class="dropdown-item" href="#">开发团队</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">下拉3</a>
+                            <a class="dropdown-item" href="#">网站指南</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled">禁用的按钮</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                <ul class="navbar-nav ml-auto mr-5">
+                    <li class="nav-item">
+                        <a class="nav-link" title="转到我的github" href="#">
+                            <i class="bi bi-github"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="转到微信" href="#">
+                            <i class="bi bi-wechat"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" title="转到QQ" href="#">
+                            <i class="bi bi-tencent-qq"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </nav>
-    </div>
-    <div class="container">
-        <div>
-            <h1 style="text-align: center;">欢迎来到主页awa...</h1>
-            <h1 style="text-align: center;">网站正在加急建设中awa........</h1>
+
+        <!-- 巨幕 -->
+        <div class="jumbotron">
+            <div class="container text-center  pt-5">
+                <h1 class="display-4">欢迎来到XXXX</h1>
+                <p class="lead pt-4">网站正在加急建设中awa...</p>
+                <p class="lead">预计2025.1.1前搭建完毕</p>
+                <p class="lead">合作等问题请联系导航栏上的信息</p>
+                <p class="lead">此网站不包含任何商业信息，只做分享等用途</p>
+                <hr class="my-5">
+                <a class="btn btn-primary btn-lg" href="#" role="button">按钮1</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">按钮2</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">按钮3 </a>
+            </div>
         </div>
+    </div>
+
+    <div class="container">
+        <hr>
         <div style="text-align: center;">
             <p>
                 <span>可执行分类操作：</span>
@@ -67,7 +97,10 @@
                 <a href="javascript:void(0)" onclick="imagesZX()">图片处理中心</a> |
             </p>
         </div>
+        <hr>
     </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -89,6 +122,9 @@
         }
         function imagesZX() {
             window.open('https://picsum.photos/');
+        }
+        function times(){
+            
         }
     </script>
 </body>
