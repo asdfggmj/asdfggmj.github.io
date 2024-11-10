@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人主页</title>
+    <meta name="description" content="这是一个个人主页，包含个人分享链接和资源。">
+    <meta name="keywords" content="个人主页, 分享, 网站建设">
+    <title>磷酸盐的Web主页</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
@@ -34,7 +36,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">选中链接 <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">主页 <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">链接1</a>
@@ -64,6 +66,7 @@
                             <a class="dropdown-item" href="#">开发团队</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">网站指南</a>
+                            <a class="dropdown-item" href="https://analytics.google.com/">后台网址</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -94,15 +97,15 @@
         <!-- 巨幕 -->
         <div class="jumbotron">
             <div class="container text-center  pt-5">
-                <h1 class="display-4">欢迎来到XXXX</h1>
-                <p class="lead pt-4">网站正在加急建设中awa...</p>
+                <h1 class="display-4">欢迎来到 <span class="text-danger">磷酸盐</span> 的Web网页</h1>
+                <p class="lead pt-4">在这里，希望你能找到适合自己的学习网站...</p>
                 <p class="lead">预计2025.1.1前搭建完毕</p>
-                <p class="lead">合作等问题请联系导航栏上的信息</p>
-                <p class="lead">此网站不包含任何商业信息，只做分享等用途</p>
+                <p class="lead">合作等问题请联系顶部右侧导航栏上的信息</p>
+                <p class="lead text-danger">此站点不包含任何商业信息，只做分享等用途</p>
                 <hr class="my-5">
-                <a class="btn btn-primary btn-lg" href="#" role="button">按钮1</a>
-                <a class="btn btn-primary btn-lg" href="#" role="button">按钮2</a>
-                <a class="btn btn-primary btn-lg" href="#" role="button">按钮3 </a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">demo1</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">demo2</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">demo3 </a>
             </div>
         </div>
     </div>
@@ -150,6 +153,44 @@
         </div>
         <hr>
     </div>
+    <!-- 页脚内容 -->
+    <div class="container-filed">
+        <div class="row">
+            <div class="col bg-light">
+                <p>demo</p>
+                <p>demo</p>
+                <p>demo</p>
+                <p>demo</p>
+                <p>demo</p>
+                <p>demo</p>
+                <p>demo</p>
+                <p>demo</p>
+                <p>demo</p>
+                <p>demo</p>
+            </div>
+        </div>
+    </div>
+    <!-- 页脚内容结束 -->
+
+    <div class="modal fade" id="help-modal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="help-modal-title">网站公告</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">我知道了</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -162,6 +203,39 @@
         integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
         crossorigin="anonymous"></script>
     <script>
+        // 示例公告数据
+        const announcements = [
+            { title: "1. 网站即将升级", content: "我们的站点将于本月末进行升级，可能会有短时间的不可用。" },
+            { title: "2. 新功能上线", content: "我们新增了一个在线工具，帮助您更快速地完成任务。" },
+            { title: "3. 感谢您的支持", content: "感谢每一位用户的支持，我们会持续优化站点的功能和服务。" }
+        ];
+
+        // 加载公告内容并显示
+        function loadAnnouncements() {
+            let modalBody = document.querySelector("#help-modal .modal-body");
+            modalBody.innerHTML = "";  // 清空当前的内容
+            announcements.forEach(announcement => {
+                const title = document.createElement('h5');
+                title.className = 'text-danger';
+                title.textContent = announcement.title;
+
+                const content = document.createElement('p');
+                content.className = 'ml-3';
+                content.textContent = announcement.content;
+
+                modalBody.appendChild(title);
+                modalBody.appendChild(content);
+                modalBody.appendChild(document.createElement('hr'));
+            });
+        }
+
+        loadAnnouncements();
+    </script>
+    <script>
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
         function RollCaller() {
             window.open('RollCaller.html');
         }
@@ -198,6 +272,9 @@
         function tzypppt() {
             window.open('https://www.ypppt.com')
         }
+        $(function () {
+            $("#help-modal").modal("show")
+        })
     </script>
 </body>
 
