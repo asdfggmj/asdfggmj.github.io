@@ -28,26 +28,20 @@ const visitCountElem = document.getElementById("visitCount");
 // --------------------
 // Counter API v2 配置
 // --------------------
-const COUNTER_API_URL = "https://api.countapi.xyz/v2"; // v2 API URL
-const NAMESPACE = "asdfggmj's Workspace"; // 你的 namespace
-const KEY = "First Counter";                   // 你的 key
-const TOKEN = "ut_3H3gQMxmglNNW2ARF5AXFVsLxmXFOApNmAgyj5PB";             // 你的 key，需要替换成你的实际 Token
-
+const COUNTER_API_URL = "https://api.countapi.xyz/v2";
+const NAMESPACE = "asdfggmj's Workspace"; 
+const KEY = "First Counter"; 
+const TOKEN = "ut_3H3gQMxmglNNW2ARF5AXFVsLxmXFOApNmAgyj5PB";     
 // 访问统计
 async function incrementVisit() {
     try {
-        const res = await fetch(`${COUNTER_API_URL}/hit/${NAMESPACE}/${KEY}`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${TOKEN}`,
-                "Content-Type": "application/json"
-            }
-        });
+        const url = `${COUNTER_API_URL}/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`;
+        const res = await fetch(url); 
         const data = await res.json();
-        visitCountElem.innerText = data.value;
+        document.getElementById("visitCount").innerText = data.value;
     } catch (err) {
         console.error("访问统计失败", err);
-        visitCountElem.innerText = "0";
+        document.getElementById("visitCount").innerText = "0";
     }
 }
 
