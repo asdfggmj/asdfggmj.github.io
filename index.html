@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>分辨率切换 + 访问统计</title>
+<title>你好沸羊羊</title>
 </head>
 
 <body>
@@ -24,35 +24,52 @@
 
 <script>
 const visitCountElem = document.getElementById("visitCount");
-const namespace = "asdfggmj.github.io";
-const key = "visits";
 
-// 访问次数统计
-fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
-  .then(res => res.json())
-  .then(res => {
-    visitCountElem.innerText = res.value;
-  })
-  .catch(err => {
-    console.error("访问统计失败", err);
-    visitCountElem.innerText = "0";
-  });
+// --------------------
+// Counter API v2 配置
+// --------------------
+const COUNTER_API_URL = "https://api.countapi.xyz/v2"; // v2 API URL
+const NAMESPACE = "asdfggmj's Workspace"; // 你的 namespace
+const KEY = "First Counter";                   // 你的 key
+const TOKEN = "ut_3H3gQMxmglNNW2ARF5AXFVsLxmXFOApNmAgyj5PB";             // 你的 key，需要替换成你的实际 Token
 
+// 访问统计
+async function incrementVisit() {
+    try {
+        const res = await fetch(`${COUNTER_API_URL}/hit/${NAMESPACE}/${KEY}`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${TOKEN}`,
+                "Content-Type": "application/json"
+            }
+        });
+        const data = await res.json();
+        visitCountElem.innerText = data.value;
+    } catch (err) {
+        console.error("访问统计失败", err);
+        visitCountElem.innerText = "0";
+    }
+}
+
+// 调用一次增加访问次数
+incrementVisit();
+
+// --------------------
+// 图片和摄像头切换逻辑
+// --------------------
 const img = document.getElementById("img");
 const video = document.getElementById("video");
 let stream = null;
 
 const images = {
-    "480": "/images/480.png",
+    "480": "/images/480.png",   // 替换成你的沸羊羊图片路径
     "720": "/images/720.png",
     "1080": "/images/1080.png"
 };
 
-// 分辨率切换
 document.getElementById("resolution").addEventListener("change", async function() {
     const value = this.value;
 
-    // 如果之前开过摄像头先关闭
     if(stream){
         stream.getTracks().forEach(track => track.stop());
         stream = null;
