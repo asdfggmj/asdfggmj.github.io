@@ -26,11 +26,13 @@ const img = document.getElementById("img")
 const video = document.getElementById("video")
 let stream = null
 
-// 访问次数统计
-let count = localStorage.getItem("visitCount") || 0;
-count = Number(count) + 1;
-localStorage.setItem("visitCount", count);
-document.getElementById("visitCount").innerText = count;
+// 首次访问增加一次
+if(!localStorage.getItem("hasVisited")){
+    let count = localStorage.getItem("visitCount") || 0;
+    count = Number(count) + 1;
+    localStorage.setItem("visitCount", count);
+    localStorage.setItem("hasVisited", "true");
+}
     
 const images = {
     "480": "/images/480.png",
