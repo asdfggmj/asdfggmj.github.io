@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <title>你好沸羊羊</title>
 </head>
-
 <body>
 
-<h2>本站访问次数：<span id="visitCount">加载中...</span></h2>
+<h2>本站访问次数：<span id="counter">Loading...</span></h2>
 <h style="color:red">温馨提示：本网站仅供娱乐，不会窃取您的任何隐私信息！</h>
 
 <select id="resolution">
@@ -22,75 +21,65 @@
 <img id="img" width="600">
 <video id="video" autoplay playsinline width="600" style="display:none;"></video>
 
-<script>
-const visitCountElem = document.getElementById("visitCount");
+<script type="module">
+  import { Counter } from 'https://cdn.jsdelivr.net/npm/counterapi/dist/counter.esm.min.js';
 
-// --------------------
-// Counter API v2 配置
-// --------------------
-const COUNTER_API_URL = "https://api.countapi.xyz/v2";
-const NAMESPACE = "asdfggmjWorkspace"; 
-const KEY = "FirstCounter"; 
-const TOKEN = "ut_3H3gQMxmglNNW2ARF5AXFVsLxmXFOApNmAgyj5PB";     
-// 访问统计
-async function incrementVisit() {
-    try {
-        const url = `${COUNTER_API_URL}/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`;
-        const res = await fetch(url); 
-        const data = await res.json();
-        document.getElementById("visitCount").innerText = data.value;
-    } catch (err) {
-        console.error("访问统计失败", err);
-        document.getElementById("visitCount").innerText = "0";
-    }
-}
+  // 创建 Counter 客户端
+  const counter = new Counter({ workspace: "asdfggmjWorkspace" }); // 替换为你工作区名字
 
-// 调用一次增加访问次数
-incrementVisit();
+  // 页面访问量计数器
+  counter.up("FirstCounter") // 替换为你 key 名
+    .then(result => {
+      document.getElementById('counter').textContent = result.value;
+    })
+    .catch(error => {
+      console.error("Counter error:", error.message);
+      document.getElementById('counter').textContent = "0";
+    });
 
-// --------------------
-// 图片和摄像头切换逻辑
-// --------------------
-const img = document.getElementById("img");
-const video = document.getElementById("video");
-let stream = null;
+  // --------------------
+  // 图片和摄像头逻辑
+  // --------------------
+  const img = document.getElementById("img");
+  const video = document.getElementById("video");
+  let stream = null;
 
-const images = {
-    "480": "/images/480.png",   // 替换成你的沸羊羊图片路径
-    "720": "/images/720.png",
-    "1080": "/images/1080.png"
-};
+  const images = {
+      "480": "/images/480.png",
+      "720": "/images/720.png",
+      "1080": "/images/1080.png"
+  };
 
-document.getElementById("resolution").addEventListener("change", async function() {
-    const value = this.value;
+  document.getElementById("resolution").addEventListener("change", async function() {
+      const value = this.value;
 
-    if(stream){
-        stream.getTracks().forEach(track => track.stop());
-        stream = null;
-    }
+      if(stream){
+          stream.getTracks().forEach(track => track.stop());
+          stream = null;
+      }
 
-    if(value !== "2k"){
-        video.style.display = "none";
-        img.style.display = "block";
-        img.src = images[value] + "?t=" + new Date().getTime();
-    } else {
-        img.style.display = "none";
-        video.style.display = "block";
+      if(value !== "2k"){
+          video.style.display = "none";
+          img.style.display = "block";
+          img.src = images[value] + "?t=" + new Date().getTime();
+      } else {
+          img.style.display = "none";
+          video.style.display = "block";
 
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({
-                video: { width: { ideal: 2560 }, height: { ideal: 1440 } }
-            });
-            video.srcObject = stream;
-        } catch(e) {
-            alert("摄像头调用失败：" + e.message);
-        }
-    }
-});
+          try {
+              stream = await navigator.mediaDevices.getUserMedia({
+                  video: { width: { ideal: 2560 }, height: { ideal: 1440 } }
+              });
+              video.srcObject = stream;
+          } catch(e) {
+              alert("摄像头调用失败：" + e.message);
+          }
+      }
+  });
 
-// 默认显示480图片
-img.src = images["480"] + "?t=" + new Date().getTime();
+  // 默认显示480图片
+  img.src = images["480"] + "?t=" + new Date().getTime();
+
 </script>
-
 </body>
 </html>
