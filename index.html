@@ -6,6 +6,7 @@
 </head>
 
 <body>
+<h1>本站访问次数：<span id="visitCount"></span></h1>
 
 <select id="resolution">
     <option value="480">480p</option>
@@ -25,6 +26,12 @@ const img = document.getElementById("img")
 const video = document.getElementById("video")
 let stream = null
 
+// 访问次数统计
+let count = localStorage.getItem("visitCount") || 0;
+count = Number(count) + 1;
+localStorage.setItem("visitCount", count);
+document.getElementById("visitCount").innerText = count;
+    
 const images = {
     "480": "/images/480.png",
     "720": "/images/720.png",
