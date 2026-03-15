@@ -2,18 +2,19 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>分辨率切换</title>
+<title>你好沸羊羊</title>
 </head>
 
 <body>
-<h1>本站访问次数：<span id="visitCount"></span></h1>
-<p style="color:red">温馨提示：本网站仅供娱乐，不会采取任何恶意代码窃取您的隐私信息</p>
+
+<h2>本站访问次数：<span id="visitCount">加载中...</span></h2>
+<h style="color:red">温馨提示：本网站仅供娱乐，不会窃取您的任何隐私信息！</h>
 
 <select id="resolution">
     <option value="480">480p</option>
     <option value="720">720p</option>
     <option value="1080">1080p</option>
-    <option value="2k">2K</option>
+    <option value="2k">2K（摄像头）</option>
 </select>
 
 <br><br>
@@ -22,71 +23,69 @@
 <video id="video" autoplay playsinline width="600" style="display:none;"></video>
 
 <script>
+// --------------------
+// 全网访问统计（countapi.xyz）
+// --------------------
+const visitCountElem = document.getElementById("visitCount");
+const namespace = "asdfggmj.github.io"; // 可随便改成你的网站唯一标识
+const key = "visits";
 
-const img = document.getElementById("img")
-const video = document.getElementById("video")
-let stream = null
+// 调用 countapi 获取并增加一次访问量
+fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+  .then(res => res.json())
+  .then(res => {
+    visitCountElem.innerText = res.value;
+  })
+  .catch(err => {
+    console.error("访问统计失败", err);
+    visitCountElem.innerText = "统计失败";
+  });
 
-// 首次访问增加一次
-if(!localStorage.getItem("hasVisited")){
-    let count = localStorage.getItem("visitCount") || 0;
-    count = Number(count) + 1;
-    localStorage.setItem("visitCount", count);
-    localStorage.setItem("hasVisited", "true");
-}
-    
+// --------------------
+// 图片和摄像头切换逻辑
+// --------------------
+const img = document.getElementById("img");
+const video = document.getElementById("video");
+let stream = null;
+
 const images = {
-    "480": "/images/480.png",
-    "720": "/images/720.png",
-    "1080": "/images/1080.png"
-}
+    "480": "images/480.png",   // 替换成你的沸羊羊图片路径
+    "720": "images/720.png",
+    "1080": "images/1080.png"
+};
 
-document.getElementById("resolution").addEventListener("change", async function(){
-
-    const value = this.value
+document.getElementById("resolution").addEventListener("change", async function() {
+    const value = this.value;
 
     // 如果之前开过摄像头先关闭
     if(stream){
-        stream.getTracks().forEach(track => track.stop())
-        stream = null
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
     }
 
     if(value !== "2k"){
+        // 显示图片
+        video.style.display = "none";
+        img.style.display = "block";
+        img.src = images[value] + "?t=" + new Date().getTime(); // 防止缓存
+    } else {
+        // 调用摄像头
+        img.style.display = "none";
+        video.style.display = "block";
 
-        video.style.display = "none"
-        img.style.display = "block"
-
-        img.src = images[value]
-
-    }else{
-
-        img.style.display = "none"
-        video.style.display = "block"
-
-        try{
-
+        try {
             stream = await navigator.mediaDevices.getUserMedia({
-                video:{
-                    width:{ideal:2560},
-                    height:{ideal:1440}
+                video: {
+                    width: { ideal: 2560 },
+                    height: { ideal: 1440 }
                 }
-            })
-
-            video.srcObject = stream
-
-        }catch(e){
-
-            alert("摄像头调用失败：" + e.message)
-
+            });
+            video.srcObject = stream;
+        } catch(e) {
+            alert("摄像头调用失败：" + e.message);
         }
     }
+});
 
-})
-
-// 默认480
-img.src = images["480"]
-
-</script>
-
-</body>
-</html>
+// 默认显示480图片
+img.src = images["480"] + "?t=" + new Date().getTime();
