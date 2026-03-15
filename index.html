@@ -29,13 +29,13 @@ const visitCountElem = document.getElementById("visitCount");
 // Counter API v2 配置
 // --------------------
 const COUNTER_API_URL = "https://api.countapi.xyz/v2";
-const NAMESPACE = "asdfggmj's Workspace"; 
-const KEY = "First Counter"; 
+const NAMESPACE = "asdfggmjWorkspace"; 
+const KEY = "FirstCounter"; 
 const TOKEN = "ut_3H3gQMxmglNNW2ARF5AXFVsLxmXFOApNmAgyj5PB";     
 // 访问统计
 async function incrementVisit() {
     try {
-        const url = `${COUNTER_API_URL}/hit/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`;
+        const url = `${COUNTER_API_URL}/${encodeURIComponent(NAMESPACE)}/${encodeURIComponent(KEY)}`;
         const res = await fetch(url); 
         const data = await res.json();
         document.getElementById("visitCount").innerText = data.value;
