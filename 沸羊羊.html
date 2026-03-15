@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>分辨率切换</title>
+</head>
+
+<body>
+
+<select id="resolution">
+    <option value="480">480p</option>
+    <option value="720">720p</option>
+    <option value="1080">1080p</option>
+    <option value="2k">2K（摄像头）</option>
+</select>
+
+<br><br>
+
+<img id="img" width="600">
+<video id="video" autoplay playsinline width="600" style="display:none;"></video>
+
+<script>
+
+const img = document.getElementById("img")
+const video = document.getElementById("video")
+let stream = null
+
+const images = {
+    "480": "/images/480.png",
+    "720": "/images/720.png",
+    "1080": "/images/1080.png"
+}
+
+document.getElementById("resolution").addEventListener("change", async function(){
+
+    const value = this.value
+
+    // 如果之前开过摄像头先关闭
+    if(stream){
+        stream.getTracks().forEach(track => track.stop())
+        stream = null
+    }
+
+    if(value !== "2k"){
+
+        video.style.display = "none"
+        img.style.display = "block"
+
+        img.src = images[value]
+
+    }else{
+
+        img.style.display = "none"
+        video.style.display = "block"
+
+        try{
+
+            stream = await navigator.mediaDevices.getUserMedia({
+                video:{
+                    width:{ideal:2560},
+                    height:{ideal:1440}
+                }
+            })
+
+            video.srcObject = stream
+
+        }catch(e){
+
+            alert("摄像头调用失败：" + e.message)
+
+        }
+    }
+
+})
+
+// 默认480
+img.src = images["480"]
+
+</script>
+
+</body>
+</html>
