@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>你好沸羊羊</title>
+<title>分辨率切换 + 访问统计</title>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
     <option value="480">480p</option>
     <option value="720">720p</option>
     <option value="1080">1080p</option>
-    <option value="2k">2K（摄像头）</option>
+    <option value="2k">2K</option>
 </select>
 
 <br><br>
@@ -23,14 +23,11 @@
 <video id="video" autoplay playsinline width="600" style="display:none;"></video>
 
 <script>
-// --------------------
-// 全网访问统计（countapi.xyz）
-// --------------------
 const visitCountElem = document.getElementById("visitCount");
-const namespace = "asdfggmj.github.io"; // 可随便改成你的网站唯一标识
+const namespace = "asdfggmj.github.io";
 const key = "visits";
 
-// 调用 countapi 获取并增加一次访问量
+// 访问次数统计
 fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
   .then(res => res.json())
   .then(res => {
@@ -38,22 +35,20 @@ fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
   })
   .catch(err => {
     console.error("访问统计失败", err);
-    visitCountElem.innerText = "统计失败";
+    visitCountElem.innerText = "0";
   });
 
-// --------------------
-// 图片和摄像头切换逻辑
-// --------------------
 const img = document.getElementById("img");
 const video = document.getElementById("video");
 let stream = null;
 
 const images = {
-    "480": "images/480.png",   // 替换成你的沸羊羊图片路径
-    "720": "images/720.png",
-    "1080": "images/1080.png"
+    "480": "/images/480.png",
+    "720": "/images/720.png",
+    "1080": "/images/1080.png"
 };
 
+// 分辨率切换
 document.getElementById("resolution").addEventListener("change", async function() {
     const value = this.value;
 
@@ -64,21 +59,16 @@ document.getElementById("resolution").addEventListener("change", async function(
     }
 
     if(value !== "2k"){
-        // 显示图片
         video.style.display = "none";
         img.style.display = "block";
-        img.src = images[value] + "?t=" + new Date().getTime(); // 防止缓存
+        img.src = images[value] + "?t=" + new Date().getTime();
     } else {
-        // 调用摄像头
         img.style.display = "none";
         video.style.display = "block";
 
         try {
             stream = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    width: { ideal: 2560 },
-                    height: { ideal: 1440 }
-                }
+                video: { width: { ideal: 2560 }, height: { ideal: 1440 } }
             });
             video.srcObject = stream;
         } catch(e) {
@@ -89,3 +79,7 @@ document.getElementById("resolution").addEventListener("change", async function(
 
 // 默认显示480图片
 img.src = images["480"] + "?t=" + new Date().getTime();
+</script>
+
+</body>
+</html>
