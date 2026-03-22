@@ -1,85 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>你好沸羊羊</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>磷的个人主页</title>
 </head>
 <body>
-
-<h2>本站访问次数：<span id="counter">Loading...</span></h2>
-<h style="color:red">温馨提示：本网站仅供娱乐，不会窃取您的任何隐私信息！</h>
-
-<select id="resolution">
-    <option value="480">480p</option>
-    <option value="720">720p</option>
-    <option value="1080">1080p</option>
-    <option value="2k">2K</option>
-</select>
-
-<br><br>
-
-<img id="img" width="600">
-<video id="video" autoplay playsinline width="600" style="display:none;"></video>
-
-<script type="module">
-  import { Counter } from 'https://cdn.jsdelivr.net/npm/counterapi/dist/counter.esm.min.js';
-
-  // 创建 Counter 客户端
-  const counter = new Counter({ workspace: "asdfggmjWorkspace" }); // 替换为你工作区名字
-
-  // 页面访问量计数器
-  counter.up("FirstCounter") // 替换为你 key 名
-    .then(result => {
-      document.getElementById('counter').textContent = result.value;
-    })
-    .catch(error => {
-      console.error("Counter error:", error.message);
-      document.getElementById('counter').textContent = "0";
-    });
-
-  // --------------------
-  // 图片和摄像头逻辑
-  // --------------------
-  const img = document.getElementById("img");
-  const video = document.getElementById("video");
-  let stream = null;
-
-  const images = {
-      "480": "/images/480.png",
-      "720": "/images/720.png",
-      "1080": "/images/1080.png"
-  };
-
-  document.getElementById("resolution").addEventListener("change", async function() {
-      const value = this.value;
-
-      if(stream){
-          stream.getTracks().forEach(track => track.stop());
-          stream = null;
-      }
-
-      if(value !== "2k"){
-          video.style.display = "none";
-          img.style.display = "block";
-          img.src = images[value] + "?t=" + new Date().getTime();
-      } else {
-          img.style.display = "none";
-          video.style.display = "block";
-
-          try {
-              stream = await navigator.mediaDevices.getUserMedia({
-                  video: { width: { ideal: 2560 }, height: { ideal: 1440 } }
-              });
-              video.srcObject = stream;
-          } catch(e) {
-              alert("摄像头调用失败：" + e.message);
-          }
-      }
-  });
-
-  // 默认显示480图片
-  img.src = images["480"] + "?t=" + new Date().getTime();
-
-</script>
+    这是我的个人主页
 </body>
 </html>
